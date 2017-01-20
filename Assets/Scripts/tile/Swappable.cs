@@ -14,8 +14,10 @@ public class Swappable : MonoBehaviour {
 	void Update () {
 		if(selected)
 		{
-			gameObject.GetComponent<TileController>().getPipe().GetComponent<RectTransform>().localEulerAngles = new Vector3(0, 0, 3f * Mathf.Cos(Time.frameCount/4f));
-			gameObject.GetComponent<TileController>().getPipe().GetComponent<RectTransform>().localScale = new Vector3((0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f), (0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f), 1);
+			gameObject.GetComponent<TileController>().getPipe().GetComponent<RectTransform>().localEulerAngles = 
+				new Vector3(0, 0, 3f * Mathf.Cos(Time.frameCount/4f));
+			gameObject.GetComponent<TileController>().getPipe().GetComponent<RectTransform>().localScale = 
+				new Vector3((0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f), (0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f), 1);
 		}
 		else
 		{
@@ -38,6 +40,7 @@ public class Swappable : MonoBehaviour {
 
 	public void OnClick()
 	{
+		DestroyImmediate(gameObject.GetComponent<ScaleWayPoints>());
 		bool hasSelected = false;
 		var parent = gameObject.transform.parent;
 		for(int i = 0; i < parent.childCount; i++)
@@ -59,27 +62,35 @@ public class Swappable : MonoBehaviour {
 			{
 				if (parent.GetChild(i).gameObject.GetComponent<Swappable>().selected && i != gameObject.transform.GetSiblingIndex())
 				{
-					var ThisPipe = parent.GetChild(gameObject.transform.GetSiblingIndex()).GetComponent<TileController>();
-					var OtherPipe = parent.GetChild(i).gameObject.GetComponent<TileController>();
+					var ThisPipe = parent.GetChild(gameObject.transform.GetSiblingIndex()).GetComponent<TileController>(); //AKA "gameObject"
+					var OtherPipe = parent.GetChild(i).gameObject.GetComponent<TileController>(); //Tile to be swapped with
 					TileController.Direction thisTempBegin = ThisPipe.Begin;
 					TileController.Direction thisTempEnd = ThisPipe.End;
 					TileController.Direction otherTempBegin = OtherPipe.Begin;
 					TileController.Direction otherTempEnd = OtherPipe.End;
 
-					Transform ThisPipeTransform = Instantiate(Pipe, transform.position, transform.rotation) as Transform;
-					GameObject ThisPipeObject = ThisPipeTransform.gameObject;
-					ThisPipeObject.transform.SetParent(transform.parent);
-					ThisPipeObject.
+					OtherPipe.Begin = thisTempBegin;
+					OtherPipe.End = thisTempEnd;
+					ThisPipe.Begin = otherTempBegin;
+					ThisPipe.End = otherTempEnd;
 
 					gameObject.transform.parent.GetChild(i).gameObject.GetComponent<Swappable>().Deselect();
-					
+
 					ThisPipe.gameObject.AddComponent(typeof(ScaleWayPoints));
 
-					ThisPipe.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[2] {new Vector3(0.1f, 0.1f, 0.01f), new Vector3(1, 1, .1f)};
+					ThisPipe.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[2]
+					{
+						new Vector3(0.1f, 0.1f, 0.01f),
+						new Vector3(1.0f, 1.0f, 0.1f)
+					};
 					
 					OtherPipe.gameObject.AddComponent(typeof(ScaleWayPoints));
 
-					OtherPipe.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[2] {new Vector3(0.1f, 0.1f, 0.01f), new Vector3(1, 1, .1f) };
+					OtherPipe.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[2]
+					{
+						new Vector3(0.1f, 0.1f, 0.01f),
+						new Vector3(1.0f, 1.0f, 0.1f)
+					};
 
 					break;
 				}
