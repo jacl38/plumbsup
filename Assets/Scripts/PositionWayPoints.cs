@@ -6,12 +6,14 @@ public class PositionWayPoints : MonoBehaviour {
 	public Vector3[] points;
 	private int index = 0;
 	private Vector2 Current;
+	private Vector2 Begin;
 	private float xVel = 0.0F;
 	private float yVel = 0.0F;
 	private float time;
 
 	void Start () {
 		Current = new Vector2(points[0].x, points[0].y);
+		Begin = Current;
 		gameObject.GetComponent<RectTransform>().localPosition = new Vector2(points[0].x, points[0].y);
 		time = 0;
 	}
@@ -27,5 +29,11 @@ public class PositionWayPoints : MonoBehaviour {
 			time = 0;
 			index++;
 		}
+	}
+
+	public void Reset()
+	{
+		Current = Begin;
+		time = 0;
 	}
 }

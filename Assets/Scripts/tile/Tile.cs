@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEngine.UI;
 
-[ExecuteInEditMode]
 public class Tile : MonoBehaviour {
 
 	public float FullSize;
@@ -80,7 +79,7 @@ public class Tile : MonoBehaviour {
 			fills[i].GetComponent<Image>().color = fillColor;
 		}
 	}
-
+	
 	public Direction getStart()
 	{
 		return this.start;
