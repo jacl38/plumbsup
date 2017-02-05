@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class SmartPopulate : MonoBehaviour {
 
-	[Range(1, 10)]
+	public bool playing;
+	[Range(3, 10)]
 	public int Degree;
 	public Transform Pipe;
 
@@ -12,10 +13,16 @@ public class SmartPopulate : MonoBehaviour {
 	private GameObject endPoint;
 	GridLayoutGroup glg;
 
-	private int start;
-	private int end;
+	int start;
+	int end;
 
 	void Start () {
+		playing = true;
+
+		if(!(DifficultySelect.Difficulty >= DifficultySelect.MinDifficulty && DifficultySelect.Difficulty <= DifficultySelect.MaxDifficulty)) {
+			DifficultySelect.Difficulty = 3;
+		}
+		Degree = DifficultySelect.Difficulty;
 		start = (int) Mathf.Floor(Random.Range(0, Degree));
 		end = (int) Mathf.Floor(Random.Range(0, Degree));
 
@@ -45,6 +52,7 @@ public class SmartPopulate : MonoBehaviour {
 				p.transform.SetParent(gameObject.transform);
 				p.transform.localScale = Vector3.one;
 				TileController tile = p.GetComponent<TileController>();
+				tile.PipeColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 				tile.Degree = Degree;
 				int rand = (int) Mathf.Floor(Random.Range(0, 4));
 				tile.Begin = (TileController.Direction) rand;
@@ -58,6 +66,15 @@ public class SmartPopulate : MonoBehaviour {
 	public int getEnd() { return this.end; }
 
 	void Update () {
-		
+		if(!playing) {
+			enableTiles(false);
+		}
+	}
+
+	public void enableTiles(bool enabled) {
+		for(int i = 0; i < gameObject.transform.childCount; i++)
+		{
+			gameObject.transform.GetChild(i).GetComponent<Button>().enabled = enabled;
+		}
 	}
 }

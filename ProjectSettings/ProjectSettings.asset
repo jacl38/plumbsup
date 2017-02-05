@@ -193,10 +193,10 @@ PlayerSettings:
   appleDeveloperTeamID: 
   AndroidTargetDevice: 0
   AndroidSplashScreenScale: 0
-  androidSplashScreen: {fileID: 0}
+  androidSplashScreen: {fileID: 2800000, guid: 46f698b4001a4274dabedf4f40aa5c80, type: 3}
   AndroidKeystoreName: 
   AndroidKeyaliasName: 
-  AndroidTVCompatibility: 1
+  AndroidTVCompatibility: 0
   AndroidIsGame: 1
   androidEnableBanner: 0
   m_AndroidBanners:
@@ -209,7 +209,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 93b1446849cc6034a80199794f05b308, type: 3}
+      m_Icon: {fileID: 2800000, guid: 46f698b4001a4274dabedf4f40aa5c80, type: 3}
       m_Width: 128
       m_Height: 128
   m_BuildTargetBatching: []
@@ -382,11 +382,11 @@ PlayerSettings:
     2: CROSS_PLATFORM_INPUT
     4: CROSS_PLATFORM_INPUT;MOBILE_INPUT
     7: CROSS_PLATFORM_INPUT;MOBILE_INPUT
-    14: MOBILE_INPUT
+    14: 
     15: CROSS_PLATFORM_INPUT;MOBILE_INPUT
-    17: MOBILE_INPUT
-    20: MOBILE_INPUT
-    22: MOBILE_INPUT
+    17: 
+    20: 
+    22: 
   platformArchitecture: {}
   scriptingBackend:
     Android: 0
@@ -470,8 +470,9 @@ PlayerSettings:
   XboxOneAllowedProductIds: []
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
-  cloudProjectId: 
-  projectName: 
-  organizationId: 
+  cloudServicesEnabled:
+    UNet: 1
+  cloudProjectId: b8f449ee-f4c3-4f75-8aa6-41842ff0dd85
+  projectName: Plumbs Up
+  organizationId: jacl38
   cloudEnabled: 0

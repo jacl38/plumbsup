@@ -19,4 +19,10 @@ public class FadeIn : MonoBehaviour {
 		gameObject.GetComponent<Image>().color = new Color(1.0F, 1.0F, 1.0F, Mathf.SmoothStep(startPercent, endPercent, timeScale * time));
 		time += Time.deltaTime;
 	}
+
+	public void Reset()
+	{
+		gameObject.GetComponent<Image>().color = new Color(1.0F, 1.0F, 1.0F, startPercent);
+		time = 0F;
+	}
 }

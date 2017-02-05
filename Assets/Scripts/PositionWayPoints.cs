@@ -12,9 +12,9 @@ public class PositionWayPoints : MonoBehaviour {
 	private float time;
 
 	void Start () {
+		gameObject.GetComponent<RectTransform>().localPosition = new Vector2(points[0].x, points[0].y);
 		Current = new Vector2(points[0].x, points[0].y);
 		Begin = Current;
-		gameObject.GetComponent<RectTransform>().localPosition = new Vector2(points[0].x, points[0].y);
 		time = 0;
 	}
 
