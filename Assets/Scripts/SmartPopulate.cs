@@ -23,15 +23,17 @@ public class SmartPopulate : MonoBehaviour {
 			DifficultySelect.Difficulty = 3;
 		}
 		Degree = DifficultySelect.Difficulty;
-		start = (int) Mathf.Floor(Random.Range(0, Degree));
-		end = (int) Mathf.Floor(Random.Range(0, Degree));
+		start  = (int) Mathf.Floor(Random.Range(0, Degree));
+		end    = (int) Mathf.Floor(Random.Range(0, Degree));
 
 		startPoint = gameObject.transform.parent.GetChild(1).gameObject;
-		endPoint = gameObject.transform.parent.GetChild(2).gameObject;
-		startPoint.transform.localPosition = new Vector3(-480 + (960 / Degree) / 2 + (start * (960/Degree)), 490, 0);
-		endPoint.transform.localPosition = new Vector3(-480 + (960 / Degree) / 2 + (end * (960/Degree)), -490, 0);
-		startPoint.GetComponent<RectTransform>().sizeDelta = new Vector3(960 / Degree, 20, 0);
-		endPoint.GetComponent<RectTransform>().sizeDelta = new Vector3(960 / Degree, 20, 0);
+		endPoint   = gameObject.transform.parent.GetChild(2).gameObject;
+
+		startPoint .transform.localPosition = new Vector3(-480 + (960 / Degree) / 2 + (start * (960/Degree)), 490, 0);
+		endPoint   .transform.localPosition = new Vector3(-480 + (960 / Degree) / 2 + (end * (960/Degree)), -490, 0);
+
+		startPoint .GetComponent<RectTransform>().sizeDelta = new Vector3(960 / Degree, 20, 0);
+		endPoint   .GetComponent<RectTransform>().sizeDelta = new Vector3(960 / Degree, 20, 0);
 
 		glg = gameObject.GetComponent<GridLayoutGroup>();
 
@@ -67,11 +69,11 @@ public class SmartPopulate : MonoBehaviour {
 
 	void Update () {
 		if(!playing) {
-			enableTiles(false);
+			setTiles(false);
 		}
 	}
 
-	public void enableTiles(bool enabled) {
+	public void setTiles(bool enabled) {
 		for(int i = 0; i < gameObject.transform.childCount; i++)
 		{
 			gameObject.transform.GetChild(i).GetComponent<Button>().enabled = enabled;

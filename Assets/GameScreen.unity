@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playing: 0
-  Degree: 6
+  Degree: 3
   Pipe: {fileID: 224858442973224904, guid: ee202fe55e247ab4e823ce9cc4e70a2a, type: 2}
 --- !u!114 &233044457
 MonoBehaviour:
@@ -881,12 +881,12 @@ Prefab:
     - target: {fileID: 224858442973224904, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 1738
+      value: 1800
       objectReference: {fileID: 0}
     - target: {fileID: 224858442973224904, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -500
+      value: -500.00006
       objectReference: {fileID: 0}
     - target: {fileID: 224858442973224904, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
         type: 2}
@@ -931,6 +931,56 @@ Prefab:
     - target: {fileID: 1341445776039132, guid: ee202fe55e247ab4e823ce9cc4e70a2a, type: 2}
       propertyPath: m_Name
       value: NewPipe
+      objectReference: {fileID: 0}
+    - target: {fileID: 114968107033031008, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: FillAmount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224787948760390516, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: -480
+      objectReference: {fileID: 0}
+    - target: {fileID: 224787948760390516, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114968107033031008, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: Degree
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224173923828979584, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 224173923828979584, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 960
+      objectReference: {fileID: 0}
+    - target: {fileID: 224787948760390516, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 224173923828979584, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224173923828979584, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224173923828979584, guid: ee202fe55e247ab4e823ce9cc4e70a2a,
+        type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ee202fe55e247ab4e823ce9cc4e70a2a, type: 2}
@@ -1032,7 +1082,6 @@ GameObject:
   - component: {fileID: 721632229}
   - component: {fileID: 721632231}
   - component: {fileID: 721632230}
-  - component: {fileID: 721632233}
   m_Layer: 5
   m_Name: GamePanel
   m_TagString: Untagged
@@ -1093,19 +1142,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 721632228}
---- !u!114 &721632233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 721632228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e4faaa3fadb55744a359883b59741e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  size: {x: 1, y: 1}
-  fix: 0
 --- !u!1 &764979804
 GameObject:
   m_ObjectHideFlags: 0

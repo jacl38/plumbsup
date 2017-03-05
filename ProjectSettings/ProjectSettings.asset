@@ -471,6 +471,10 @@ PlayerSettings:
   XboxOnePersistentLocalStorageSize: 0
   vrEditorSettings: {}
   cloudServicesEnabled:
+    Build: 0
+    Collab: 0
+    ErrorHub: 0
+    Hub: 0
     UNet: 1
   cloudProjectId: b8f449ee-f4c3-4f75-8aa6-41842ff0dd85
   projectName: Plumbs Up

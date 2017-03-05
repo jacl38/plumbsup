@@ -6,6 +6,7 @@ TagManager:
   tags:
   - SelectSource
   - DeselectSource
+  - Panel
   layers:
   - Default
   - TransparentFX

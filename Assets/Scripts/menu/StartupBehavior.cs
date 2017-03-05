@@ -2,20 +2,13 @@
 using System.Collections;
 
 public class StartupBehavior : MonoBehaviour {
-
+	
+	GameObject[] panels;
 	public GameObject mainPanel;
-	public GameObject helpPanel;
-	public GameObject levelsPanel;
-	public GameObject aboutPanel;
 
-	void Start () {
+	void Start() {
+		panels = GameObject.FindGameObjectsWithTag("Panel");
+		foreach(GameObject p in panels) p.SetActive(false);
 		mainPanel.SetActive(true);
-		helpPanel.SetActive(false);
-		levelsPanel.SetActive(false);
-		aboutPanel.SetActive(false);
-	}
-	
-	void Update () {
-	
 	}
 }

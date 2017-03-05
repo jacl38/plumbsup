@@ -9,20 +9,34 @@ public class Swappable : MonoBehaviour {
 	private AudioSource SelectSource;
 	private AudioSource DeselectSource;
 	public Transform Pipe;
+	private Vector3 angle;
+	GameObject[] pipeObjects;
 
 	void Start () {
+		pipeObjects = new GameObject[4];
+		pipeObjects[0] = gameObject.GetComponent<TileController>().getPipe();
+		pipeObjects[1] = gameObject.GetComponent<TileController>().getML();
+		pipeObjects[2] = gameObject.GetComponent<TileController>().getMR();
+		pipeObjects[3] = gameObject.GetComponent<TileController>().getDU();
 		SelectSource = GameObject.FindGameObjectWithTag("SelectSource").GetComponent<AudioSource>();
 		DeselectSource = GameObject.FindGameObjectWithTag("DeselectSource").GetComponent<AudioSource>();
 	}
 	
 	void Update () {
+		angle = new Vector3(
+			gameObject.GetComponent<TileController>().GetAngle().x,
+			gameObject.GetComponent<TileController>().GetAngle().y,
+			gameObject.GetComponent<TileController>().GetAngle().z
+		);
+
 		if(selected)
 		{
-			gameObject.GetComponent<TileController>().getPipe().GetComponent<RectTransform>().localEulerAngles = 
-				new Vector3(0, 0, 3f * Mathf.Cos(Time.frameCount/4f));
-			gameObject.GetComponent<TileController>().getPipe().GetComponent<RectTransform>().localScale = 
+			pipeObjects[0].GetComponent<RectTransform>().localEulerAngles = 
+				angle +
+				new Vector3(0, 0, 3f * Mathf.Cos(Time.frameCount / 4f));
+			pipeObjects[0].GetComponent<RectTransform>().localScale = 
 				new Vector3((0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f),
-							(0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f), 1);
+				(0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f), 1);
 		}
 		else
 		{
@@ -33,9 +47,12 @@ public class Swappable : MonoBehaviour {
 
 	public void Select()
 	{
-		this.selected = true;
-		gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 0.3f);
-		SelectSource.Play();
+		if(!(gameObject.GetComponent<TileController>().FillAmount > 0))
+		{
+			this.selected = true;
+			gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 0.3f);
+			SelectSource.Play();
+		}
 	}
 
 	public void Deselect()
@@ -93,18 +110,25 @@ public class Swappable : MonoBehaviour {
 
 					ThisPipe.gameObject.AddComponent(typeof(ScaleWayPoints));
 
-					ThisPipe.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[2]
+					ThisPipe.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[3]
 					{
-						new Vector3(0.1f, 0.1f, 0.01f),
-						new Vector3(1.0f, 1.0f, 0.25f)
+//						new Vector3(0.1f, 0.1f, 0.01f),
+//						new Vector3(1.0f, 1.0f, 0.25f)
+						new Vector3(1.1f, 1.1f, 0.025f),
+						new Vector3(0.9f, 0.9f, 0.15f),
+						new Vector3(1.0f, 1.0f, 0.15f)
 					};
 					
 					OtherPipe.gameObject.AddComponent(typeof(ScaleWayPoints));
 
-					OtherPipe.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[2]
+					OtherPipe.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[3]
 					{
-						new Vector3(0.1f, 0.1f, 0.01f),
-						new Vector3(1.0f, 1.0f, 0.25f)
+
+//						new Vector3(0.1f, 0.1f, 0.01f),
+//						new Vector3(1.0f, 1.0f, 0.25f)
+						new Vector3(1.1f, 1.1f, 0.025f),
+						new Vector3(0.9f, 0.9f, 0.15f),
+						new Vector3(1.0f, 1.0f, 0.15f)
 					};
 
 					break;

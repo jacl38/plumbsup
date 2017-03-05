@@ -12,10 +12,18 @@ public class Timer : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(s >= 0)
+		if(s > 0)
 		s -= Time.deltaTime;
 		seconds = (int) s;
-		if (seconds % 60 < 10) gameObject.GetComponent<Text>().text = (seconds / 60).ToString() + ":0" + (seconds % 60).ToString();
-		else gameObject.GetComponent<Text>().text = (seconds / 60).ToString() + ":" + (seconds % 60).ToString();
+		if(seconds % 60 < 10) {
+			gameObject.GetComponent<Text>().text = (seconds / 60).ToString() + ":0" + (seconds % 60).ToString();
+		} else {
+			gameObject.GetComponent<Text>().text = (seconds / 60).ToString() + ":" + (seconds % 60).ToString();
+		}
+
+		if(seconds == 0)
+		{
+			
+		}
 	}
 }
