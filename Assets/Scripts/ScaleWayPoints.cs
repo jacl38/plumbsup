@@ -10,16 +10,19 @@ public class ScaleWayPoints : MonoBehaviour {
 	private float xVel = 0.0F;
 	private float yVel = 0.0F;
 	private float time;
+	private float totalTime;
 
 	void Start () {
 		objectScale = gameObject.transform.localScale;
 		Current = new Vector2(points[0].x, points[0].y);
 		gameObject.transform.localScale = new Vector3(points[0].x, points[0].y, 1);
 		time = 0;
+		totalTime = 0;
 	}
 	
 	public void Update () {
 		time += Time.deltaTime;
+		totalTime += Time.deltaTime;
 
 		Current.x = Mathf.SmoothDamp(
 			Current.x,
@@ -43,5 +46,15 @@ public class ScaleWayPoints : MonoBehaviour {
 			time = 0;
 			index++;
 		}
+	}
+
+	public bool ended()
+	{
+		float duration = 0;
+		foreach(Vector3 point in points)
+		{
+			duration += point.z;
+		}
+		return totalTime > duration;
 	}
 }

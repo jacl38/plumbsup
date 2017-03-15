@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Swappable : MonoBehaviour {
 
 	bool selected = false;
+	public bool allowed = true;
 
 	private AudioSource SelectSource;
 	private AudioSource DeselectSource;
@@ -23,20 +24,27 @@ public class Swappable : MonoBehaviour {
 	}
 	
 	void Update () {
+		if(!allowed)
+			Deselect();
+		if(gameObject.GetComponent<ScaleWayPoints>() != null)
+		{
+			if(gameObject.GetComponent<ScaleWayPoints>().ended())
+				DestroyImmediate(gameObject.GetComponent<ScaleWayPoints>());
+		}
 		angle = new Vector3(
 			gameObject.GetComponent<TileController>().GetAngle().x,
 			gameObject.GetComponent<TileController>().GetAngle().y,
 			gameObject.GetComponent<TileController>().GetAngle().z
 		);
 
-		if(selected)
+		if(selected && allowed)
 		{
 			pipeObjects[0].GetComponent<RectTransform>().localEulerAngles = 
 				angle +
-				new Vector3(0, 0, 3f * Mathf.Cos(Time.frameCount / 4f));
+				new Vector3(0, 0, 3f * Mathf.Cos(Time.frameCount / 6f));
 			pipeObjects[0].GetComponent<RectTransform>().localScale = 
-				new Vector3((0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f),
-				(0.1f * Mathf.Cos(Time.frameCount / 10f) + 0.95f), 1);
+				new Vector3((0.1f * Mathf.Cos(Time.frameCount / 16f) + 0.95f),
+				(0.1f * Mathf.Cos(Time.frameCount / 16f) + 0.95f), 1);
 		}
 		else
 		{
@@ -47,7 +55,7 @@ public class Swappable : MonoBehaviour {
 
 	public void Select()
 	{
-		if(!(gameObject.GetComponent<TileController>().FillAmount > 0))
+		if(allowed && !(gameObject.GetComponent<TileController>().FillAmount > 0))
 		{
 			this.selected = true;
 			gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 0.3f);

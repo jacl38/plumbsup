@@ -10,17 +10,20 @@ public class PositionWayPoints : MonoBehaviour {
 	private float xVel = 0.0F;
 	private float yVel = 0.0F;
 	private float time;
+	private float totalTime;
 
 	void Start () {
 		gameObject.GetComponent<RectTransform>().localPosition = new Vector2(points[0].x, points[0].y);
 		Current = new Vector2(points[0].x, points[0].y);
 		Begin = Current;
 		time = 0;
+		totalTime = 0;
 	}
 
 	void Update()
 	{
 		time += Time.deltaTime;
+		totalTime += Time.deltaTime;
 		Current.x = Mathf.SmoothDamp(Current.x, points[index].x, ref xVel, 0.3F, Mathf.Infinity, Time.deltaTime / points[index].z);
 		Current.y = Mathf.SmoothDamp(Current.y, points[index].y, ref yVel, 0.3F, Mathf.Infinity, Time.deltaTime / points[index].z);
 		gameObject.GetComponent<RectTransform>().localPosition = Current;
@@ -35,5 +38,15 @@ public class PositionWayPoints : MonoBehaviour {
 	{
 		Current = Begin;
 		time = 0;
+	}
+
+	public bool ended()
+	{
+		float duration = 0;
+		foreach(Vector3 point in points)
+		{
+			duration += point.z;
+		}
+		return totalTime > duration;
 	}
 }
