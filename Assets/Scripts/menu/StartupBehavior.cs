@@ -10,5 +10,7 @@ public class StartupBehavior : MonoBehaviour {
 		panels = GameObject.FindGameObjectsWithTag("Panel");
 		foreach(GameObject p in panels) p.SetActive(false);
 		mainPanel.SetActive(true);
+		if(!PlayerPrefs.HasKey("size"))
+			PlayerPrefs.SetInt("size", 0);
 	}
 }

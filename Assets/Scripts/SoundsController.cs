@@ -3,7 +3,11 @@ using System.Collections;
 
 public class SoundsController : MonoBehaviour {
 
-	public AudioSource[] sources;
+	public static bool soundMuted = false;
+	public static bool musicMuted = false;
+
+	public AudioSource[] soundSources;
+	public AudioSource musicSource;
 
 	void Start () {
 		
@@ -13,8 +17,18 @@ public class SoundsController : MonoBehaviour {
 		
 	}
 
-	public void ToggleSource(int sourceIndex)
+	public void toggleSounds()
 	{
-		sources[sourceIndex].mute = !sources[sourceIndex].mute;
+		soundMuted = !soundMuted;
+		foreach(AudioSource source in soundSources)
+		{
+			source.mute = soundMuted;
+		}
+	}
+
+	public void toggleMusic()
+	{
+		musicMuted = !musicMuted;
+		musicSource.mute = musicMuted;
 	}
 }

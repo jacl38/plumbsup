@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class Timer : MonoBehaviour {
 
@@ -19,7 +20,7 @@ public class Timer : MonoBehaviour {
 	}
 	
 	void Update () {
-		if(s > 0)
+		if(s > 0 && !reset)
 		s -= Time.deltaTime;
 		seconds = (int) s;
 		if(seconds % 60 < 10) {
@@ -31,54 +32,66 @@ public class Timer : MonoBehaviour {
 		if(seconds <= 5)
 		{
 			gameObject.GetComponent<RectTransform>().localScale = 
-				new Vector3((0.1f * Mathf.Cos(0.25f * Time.frameCount / Mathf.PI) + 0.95f),
-					(0.1f * Mathf.Cos(0.25f * Time.frameCount / Mathf.PI) + 0.95f), 1);
+				new Vector3((0.1f * Mathf.Cos(4 * Time.frameCount * Mathf.Deg2Rad) + 0.95f),
+							(0.1f * Mathf.Cos(4 * Time.frameCount * Mathf.Deg2Rad) + 0.95f), 1);
 		}
 
 		if(seconds == 0)
 		{
-			reset = true;
-			panel.GetComponent<SmartPopulate>().disableAll();
-			if(panel.transform.GetChild(panel.GetComponent<SmartPopulate>().getStart())
-				.GetComponent<TileController>().Begin == TileController.Direction.UP)
+			startFlow();
+		}
+
+		GameObject lastPipe = panel.transform.GetChild((DifficultySelect.Difficulty * DifficultySelect.Difficulty) - DifficultySelect.Difficulty + panel.GetComponent<SmartPopulate>().getEnd()).gameObject;
+		if(lastPipe.GetComponent<TileController>().FillAmount >= 1 && lastPipe.GetComponent<TileController>().End == TileController.Direction.DOWN)
+		{
+			List<Tile> path = new List<Tile>();
+			for(int i = 0; i < panel.transform.childCount; i++)
 			{
-				panel.transform.GetChild(panel.GetComponent<SmartPopulate>().getStart())
-					.GetComponent<FillController>().StartFill();
-			} else
-				panel.GetComponent<SmartPopulate>().endGame();
-			if(panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>() != null && panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>().ended())
-			{
-				Destroy(panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>());
-			}
-			if(panel.transform.parent.gameObject.GetComponent<RotateWayPoints>() != null && panel.transform.parent.gameObject.GetComponent<RotateWayPoints>().ended())
-			{
-				Destroy(panel.transform.parent.gameObject.GetComponent<RotateWayPoints>());
-			}
-			if(panel.transform.GetChild((DifficultySelect.Difficulty*DifficultySelect.Difficulty) - DifficultySelect.Difficulty + panel.GetComponent<SmartPopulate>().getEnd())
-				.GetComponent<TileController>().FillAmount >= 1)
-			{
-				if(panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>() == null)
+				int x = i % (int) Mathf.Sqrt(panel.transform.childCount);
+				int y = i / (int) Mathf.Sqrt(panel.transform.childCount);
+				if(SmartPopulate.tiles[x, y].path)
 				{
-					panel.transform.parent.gameObject.AddComponent(typeof(ScaleWayPoints));
-
-					panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[3] {
-						new Vector3(1.1f, 1.1f, 0.025f),
-						new Vector3(0.9f, 0.9f, 0.15f),
-						new Vector3(1.0f, 1.0f, 0.15f)
-					};
+					path.Add(SmartPopulate.tiles[x, y]);
 				}
-
-				if(panel.transform.parent.gameObject.GetComponent<RotateWayPoints>() == null)
-				{
-					panel.transform.parent.gameObject.AddComponent(typeof(RotateWayPoints));
-
-					panel.transform.parent.gameObject.GetComponent<RotateWayPoints>().points = new Vector2[2] {
-						new Vector2(0f, 0f),
-						new Vector2(360, 0.5f)
-					};
-				}
-				resetPanel();
 			}
+
+			foreach(Tile t in path)
+			{
+				if(t.value > 0.8f)
+				{
+					ScoresController.goldenCount++;
+				}
+				else if(t.value > 0)
+				{
+					ScoresController.silverCount++;
+				}
+				else if(t.value < 0)
+				{
+					ScoresController.normalCount++;
+				}
+			}
+
+			if(panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>() == null)
+			{
+				panel.transform.parent.gameObject.AddComponent(typeof(ScaleWayPoints));
+
+				panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>().points = new Vector3[3] {
+					new Vector3(1.1f, 1.1f, 0.025f),
+					new Vector3(0.9f, 0.9f, 0.15f),
+					new Vector3(1.0f, 1.0f, 0.15f)
+				};
+			}
+
+			if(panel.transform.parent.gameObject.GetComponent<RotateWayPoints>() == null)
+			{
+				panel.transform.parent.gameObject.AddComponent(typeof(RotateWayPoints));
+
+				panel.transform.parent.gameObject.GetComponent<RotateWayPoints>().points = new Vector2[2] {
+					new Vector2(0f, 0f),
+					new Vector2(360, 0.5f)
+				};
+			}
+			resetPanel();
 		}
 	}
 
@@ -86,10 +99,39 @@ public class Timer : MonoBehaviour {
 	{
 		if(reset)
 		{
-			panel.GetComponent<SmartPopulate>().generateTiles();
+			panel.GetComponent<SmartPopulate>().generate();
 			reset = false;
 			seconds = originalSeconds;
-			s = seconds + 0.5f;
+			s = seconds + 1.0f;
+		}
+	}
+
+	public void startFlow()
+	{
+		reset = true;
+		panel.GetComponent<SmartPopulate>().disableAll();
+		if(panel.transform.GetChild(panel.GetComponent<SmartPopulate>().getStart())
+			.GetComponent<TileController>().Begin == TileController.Direction.UP)
+		{
+			panel.transform.GetChild(panel.GetComponent<SmartPopulate>().getStart())
+				.GetComponent<FillController>().StartFill();
+		} else
+		{
+			panel.GetComponent<SmartPopulate>().endGame();
+		}
+		if(panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>() != null && panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>().ended())
+		{
+			Destroy(panel.transform.parent.gameObject.GetComponent<ScaleWayPoints>());
+			panel.transform.parent.gameObject.transform.localScale = Vector2.one;
+		}
+		if(panel.transform.parent.gameObject.GetComponent<RotateWayPoints>() != null && panel.transform.parent.gameObject.GetComponent<RotateWayPoints>().ended())
+		{
+			Destroy(panel.transform.parent.gameObject.GetComponent<RotateWayPoints>());
+			panel.transform.parent.gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
+		}
+		if(gameObject.GetComponent<RotateWayPoints>() != null && gameObject.GetComponent<RotateWayPoints>().ended())
+		{
+			Destroy(gameObject.GetComponent<RotateWayPoints>());
 		}
 	}
 }

@@ -7,6 +7,7 @@ public class ScaleWayPoints : MonoBehaviour {
 	public Vector3[] points;
 	private int index = 0;
 	private Vector2 Current;
+	private Vector2 Begin;
 	private float xVel = 0.0F;
 	private float yVel = 0.0F;
 	private float time;
@@ -15,6 +16,7 @@ public class ScaleWayPoints : MonoBehaviour {
 	void Start () {
 		objectScale = gameObject.transform.localScale;
 		Current = new Vector2(points[0].x, points[0].y);
+		Begin = Current;
 		gameObject.transform.localScale = new Vector3(points[0].x, points[0].y, 1);
 		time = 0;
 		totalTime = 0;
@@ -48,6 +50,12 @@ public class ScaleWayPoints : MonoBehaviour {
 		}
 	}
 
+	public void Reset()
+	{
+		Current = Begin;
+		time = 0;
+	}
+
 	public bool ended()
 	{
 		float duration = 0;
@@ -56,5 +64,10 @@ public class ScaleWayPoints : MonoBehaviour {
 			duration += point.z;
 		}
 		return totalTime > duration;
+	}
+
+	void OnEnable()
+	{
+		Reset();
 	}
 }

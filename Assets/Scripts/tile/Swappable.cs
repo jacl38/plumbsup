@@ -55,7 +55,11 @@ public class Swappable : MonoBehaviour {
 
 	public void Select()
 	{
-		if(allowed && !(gameObject.GetComponent<TileController>().FillAmount > 0))
+		int index = transform.GetSiblingIndex();
+		int size = DifficultySelect.Difficulty;
+		int x = index % size;
+		int y = Mathf.FloorToInt(index/size);
+		if(!SmartPopulate.tiles[x, y].stuck && allowed && !(gameObject.GetComponent<TileController>().FillAmount > 0))
 		{
 			this.selected = true;
 			gameObject.GetComponent<Image>().color = new Color(0, 0, 0, 0.3f);
@@ -84,7 +88,12 @@ public class Swappable : MonoBehaviour {
 			}
 		}
 
-		if (!hasSelected)
+		int index = transform.GetSiblingIndex();
+		int size = DifficultySelect.Difficulty;
+		int x = index % size;
+		int y = Mathf.FloorToInt(index/size);
+
+		if (!hasSelected || SmartPopulate.tiles[x, y].stuck)
 		{
 			Select();
 		}

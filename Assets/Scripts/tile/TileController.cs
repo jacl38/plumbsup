@@ -83,10 +83,9 @@ public class TileController : MonoBehaviour
 	{
 		if(getType() != PipeType.BLOCK)
 		{
-			Debug.Log(getType());
 			if(FillAmount > 1.0f)
 				FillAmount = 1.0f;
-			if(FillAmount < 0)
+			else if(FillAmount < 0)
 				FillAmount = 0;
 			DU = gameObject.transform.GetChild(0).gameObject;
 			ML = gameObject.transform.GetChild(1).gameObject;

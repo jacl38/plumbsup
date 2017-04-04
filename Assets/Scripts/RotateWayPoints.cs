@@ -6,12 +6,14 @@ public class RotateWayPoints : MonoBehaviour {
 	public Vector2[] points;
 	private int index = 0;
 	private float Current;
+	private float Begin;
 	private float vel = 0.0F;
 	private float time;
 	private float totalTime;
 
 	void Start () {
 		Current = points[0].x;
+		Begin = Current;
 		gameObject.transform.eulerAngles = new Vector3(0, 0, points[0].x);
 		time = 0;
 		totalTime = 0;
@@ -29,6 +31,12 @@ public class RotateWayPoints : MonoBehaviour {
 		}
 	}
 
+	public void Reset()
+	{
+		Current = Begin;
+		time = 0;
+	}
+
 	public bool ended()
 	{
 		float duration = 0;
@@ -37,5 +45,10 @@ public class RotateWayPoints : MonoBehaviour {
 			duration += point.y;
 		}
 		return totalTime > duration;
+	}
+
+	void OnEnable()
+	{
+		Reset();
 	}
 }

@@ -40,6 +40,11 @@ public class PositionWayPoints : MonoBehaviour {
 		time = 0;
 	}
 
+	public void SetTo(int index)
+	{
+		Current = new Vector2(points[index].x, points[index].y);
+	}
+
 	public bool ended()
 	{
 		float duration = 0;
@@ -48,5 +53,10 @@ public class PositionWayPoints : MonoBehaviour {
 			duration += point.z;
 		}
 		return totalTime > duration;
+	}
+
+	void OnEnable()
+	{
+		Reset();
 	}
 }

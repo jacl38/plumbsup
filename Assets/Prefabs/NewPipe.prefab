@@ -113,13 +113,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Straight: {fileID: 21300000, guid: b8bf2318856ae02478c08a696164a190, type: 3}
   Corner: {fileID: 21300002, guid: b8bf2318856ae02478c08a696164a190, type: 3}
+  Block: {fileID: 21300006, guid: b8bf2318856ae02478c08a696164a190, type: 3}
   FillAmount: 0
   FullSize: 960
   Degree: 1
   Begin: 1
   End: 0
   PipeColor: {r: 0.86764705, g: 0.86764705, b: 0.86764705, a: 1}
-  FillColor: {r: 0.26666668, g: 0.6666667, b: 1, a: 1}
+  FillColor: {r: 0.22107482, g: 0.716, b: 0.803, a: 1}
 --- !u!114 &114287809620169524
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -304,6 +305,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 575f6d0829307a049b0f16a03d4077cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  availLeft: 0
+  availRight: 0
+  availTop: 0
+  availBottom: 0
 --- !u!114 &114838349090999958
 MonoBehaviour:
   m_ObjectHideFlags: 1
