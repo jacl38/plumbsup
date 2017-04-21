@@ -11,6 +11,7 @@ public class PositionWayPoints : MonoBehaviour {
 	private float yVel = 0.0F;
 	private float time;
 	private float totalTime;
+	public bool resetOnEnable = true;
 
 	void Start () {
 		gameObject.GetComponent<RectTransform>().localPosition = new Vector2(points[0].x, points[0].y);
@@ -57,6 +58,9 @@ public class PositionWayPoints : MonoBehaviour {
 
 	void OnEnable()
 	{
-		Reset();
+		if(resetOnEnable)
+		{
+			Reset();
+		}
 	}
 }

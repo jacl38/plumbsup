@@ -121,9 +121,10 @@ public class SmartPopulate : MonoBehaviour {
 					Tile leftTile = tiles[current.x-1, current.y];
 					if(!leftTile.visited && !leftTile.stuck)
 					{
-						if(leftTile.cost > current.cost + 1 || leftTile.cost == -1)
+						int rand = (int) Random.Range(1, 1000);
+						if(leftTile.cost > current.cost + rand || leftTile.cost == -1)
 						{
-							leftTile.cost = current.cost + 1;
+							leftTile.cost = current.cost + rand;
 							leftTile.from = current;
 							leftTile.fromDirection = TileController.Direction.RIGHT;
 						}
@@ -134,9 +135,10 @@ public class SmartPopulate : MonoBehaviour {
 					Tile rightTile = tiles[current.x+1, current.y];
 					if(!rightTile.visited && !rightTile.stuck)
 					{
-						if(rightTile.cost > current.cost + 1 || rightTile.cost == -1)
+						int rand = (int) Random.Range(1, 1000);
+						if(rightTile.cost > current.cost + rand || rightTile.cost == -1)
 						{
-							rightTile.cost = current.cost + 1;
+							rightTile.cost = current.cost + rand;
 							rightTile.from = current;
 							rightTile.fromDirection = TileController.Direction.LEFT;
 						}
@@ -147,9 +149,10 @@ public class SmartPopulate : MonoBehaviour {
 					Tile topTile = tiles[current.x, current.y-1];
 					if(!topTile.visited && !topTile.stuck)
 					{
-						if(topTile.cost > current.cost + 1 || topTile.cost == -1)
+						int rand = (int) Random.Range(1, 1000);
+						if(topTile.cost > current.cost + rand || topTile.cost == -1)
 						{
-							topTile.cost = current.cost + 1;
+							topTile.cost = current.cost + rand;
 							topTile.from = current;
 							topTile.fromDirection = TileController.Direction.DOWN;
 						}
@@ -160,9 +163,10 @@ public class SmartPopulate : MonoBehaviour {
 					Tile bottomTile = tiles[current.x, current.y+1];
 					if(!bottomTile.visited && !bottomTile.stuck)
 					{
-						if(bottomTile.cost > current.cost + 1 || bottomTile.cost == -1)
+						int rand = (int) Random.Range(1, 1000);
+						if(bottomTile.cost > current.cost + rand || bottomTile.cost == -1)
 						{
-							bottomTile.cost = current.cost + 1;
+							bottomTile.cost = current.cost + rand;
 							bottomTile.from = current;
 							bottomTile.fromDirection = TileController.Direction.UP;
 						}
@@ -214,8 +218,8 @@ public class SmartPopulate : MonoBehaviour {
 			}
 		}
 
-		shufflePipes(Degree);
-
+		shufflePipes();
+			
 		for(int i = 0; i < Degree * Degree; i++)
 		{
 			int x = i % Degree;
@@ -323,27 +327,24 @@ public class SmartPopulate : MonoBehaviour {
 		dijkstraGenerate();
 	}
 
-	public void shufflePipes(int amount)
+	public void shufflePipes()
 	{
-		for(int i = 0; i < amount; i++)
+		for(int x = 0; x < Degree; x++)
 		{
-			for(int x = 0; x < Degree; x++)
+			for(int y = 0; y < Degree; y++)
 			{
-				for(int y = 0; y < Degree; y++)
+				if(tiles[x, y].node && !tiles[x, y].stuck)
 				{
-					if(tiles[x, y].node && !tiles[x, y].stuck)
+					int x2 = Mathf.FloorToInt(Random.Range(0, Degree));
+					int y2 = Mathf.FloorToInt(Random.Range(0, Degree));
+					while(tiles[x, y].stuck || tiles[x2, y2].stuck)
 					{
-						int x2 = Mathf.FloorToInt(Random.Range(0, Degree));
-						int y2 = Mathf.FloorToInt(Random.Range(0, Degree));
-						while(tiles[x, y].stuck || tiles[x2, y2].stuck)
-						{
-							x2 = Mathf.FloorToInt(Random.Range(0, Degree));
-							y2 = Mathf.FloorToInt(Random.Range(0, Degree));
-						}
-						Tile flip = tiles[x, y];
-						tiles[x, y] = tiles[x2, y2];
-						tiles[x2, y2] = flip;
+						x2 = Mathf.FloorToInt(Random.Range(0, Degree));
+						y2 = Mathf.FloorToInt(Random.Range(0, Degree));
 					}
+					Tile flip = tiles[x, y];
+					tiles[x, y] = tiles[x2, y2];
+					tiles[x2, y2] = flip;
 				}
 			}
 		}

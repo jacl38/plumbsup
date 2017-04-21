@@ -39,6 +39,7 @@ public class TileController : MonoBehaviour
 
 	public float FullSize;
 	public int Degree;
+	public bool marked;
 
 	public Direction Begin;
 	public Direction End;

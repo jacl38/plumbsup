@@ -9,11 +9,15 @@ public class RestartPanel : MonoBehaviour {
 	public GameObject mainPanel;
 	public GameObject endPanel;
 	GameObject water;
-	private bool setScores = false;
 	private int totalScore;
 
 	void Start () {
 		water = gameObject.transform.parent.GetChild(3).gameObject;
+		totalScore = ScoresController.normalCount + (ScoresController.silverCount * 10) + (ScoresController.goldenCount * 50);
+		SaveData sd = new SaveData();
+		FileHandler.Load(ref sd, "save");
+		sd.addScore(DifficultySelect.Difficulty, totalScore);
+		FileHandler.Save(sd, "save");
 	}
 
 	void Update () {
@@ -23,7 +27,6 @@ public class RestartPanel : MonoBehaviour {
 			water.GetComponent<FadeIn>().startPercent = 1.0f;
 			water.GetComponent<FadeIn>().endPercent = 0.0f;
 			water.GetComponent<FadeIn>().timeScale = 2f;
-			totalScore = ScoresController.normalCount + (ScoresController.silverCount * 10) + (ScoresController.goldenCount * 50);
 			GameObject.Find("Amounts").GetComponent<Text>().text = "x" + ScoresController.normalCount + "\n" +
 				"x" + ScoresController.silverCount + "\n" +
 				"x" + ScoresController.goldenCount + "\n" +
@@ -33,8 +36,6 @@ public class RestartPanel : MonoBehaviour {
 
 	public void TryAgain()
 	{
-		PlayerPrefs.SetInt("score_" + PlayerPrefs.GetInt("size"), totalScore);
-		PlayerPrefs.SetInt("size", PlayerPrefs.GetInt("size") + 1);
 		if(water.GetComponent<FadeIn>() != null)
 		{
 			water.GetComponent<Image>().color = water.GetComponent<FadeIn>().startColor;
@@ -52,7 +53,5 @@ public class RestartPanel : MonoBehaviour {
 	public void Menu()
 	{
 		SceneManager.LoadScene("MenuScreen");
-		PlayerPrefs.SetInt("score_" + PlayerPrefs.GetInt("size"), totalScore);
-		PlayerPrefs.SetInt("size", PlayerPrefs.GetInt("size") + 1);
 	}
 }

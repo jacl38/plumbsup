@@ -3,14 +3,16 @@ using System.Collections;
 
 public class DifficultySelect : MonoBehaviour {
 
-	public static int MinDifficulty = 3;
+	public static int MinDifficulty = 4;
 	public static int MaxDifficulty = 10;
 	public static int Difficulty;
 	public UnityEngine.UI.Slider slider;
 	public UnityEngine.UI.Text tx;
 
 	void Start () {
-		tx.text = "1";
+		slider.minValue = MinDifficulty - 1;
+		slider.maxValue = MaxDifficulty - 1;
+		tx.text = "" + MinDifficulty;
 		Difficulty = 1;
 	}
 	

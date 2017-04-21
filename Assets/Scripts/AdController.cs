@@ -7,6 +7,8 @@ public class AdController : MonoBehaviour {
 	public bool viewedAd = false;
 
 	void Start () {
+		ShowAd();
+		SetViewed();
 	}
 
 	void Update () {
