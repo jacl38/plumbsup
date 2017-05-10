@@ -68,11 +68,14 @@ public class TileController : MonoBehaviour
 
 	void Start()
 	{
+		FillColor = ThemeHolder.theme.watercolor;
 		DoFill();
-		DU = gameObject.transform.GetChild(0).gameObject;
-		ML = gameObject.transform.GetChild(1).gameObject;
-		MR = gameObject.transform.GetChild(2).gameObject;
-		Pipe = gameObject.transform.GetChild(3).gameObject;
+		Pipe = gameObject.transform.GetChild(0).gameObject;
+		DU = gameObject.transform.GetChild(1).gameObject;
+		ML = gameObject.transform.GetChild(2).gameObject;
+		MR = gameObject.transform.GetChild(3).gameObject;
+		Straight = ThemeHolder.theme.straightPipe;
+		Corner = ThemeHolder.theme.cornerPipe;
 	}
 
 	void Update()
@@ -88,10 +91,10 @@ public class TileController : MonoBehaviour
 				FillAmount = 1.0f;
 			else if(FillAmount < 0)
 				FillAmount = 0;
-			DU = gameObject.transform.GetChild(0).gameObject;
-			ML = gameObject.transform.GetChild(1).gameObject;
-			MR = gameObject.transform.GetChild(2).gameObject;
-			Pipe = gameObject.transform.GetChild(3).gameObject;
+			Pipe = gameObject.transform.GetChild(0).gameObject;
+			DU = gameObject.transform.GetChild(1).gameObject;
+			ML = gameObject.transform.GetChild(2).gameObject;
+			MR = gameObject.transform.GetChild(3).gameObject;
 			gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(FullSize / Degree, FullSize / Degree);
 			Pipe.GetComponent<RectTransform>().sizeDelta = new Vector2(FullSize / Degree, FullSize / Degree);
 

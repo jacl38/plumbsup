@@ -27,6 +27,8 @@ public class SmartPopulate : MonoBehaviour {
 	public Color normalColor;
 	public Color silverColor;
 	public Color goldenColor;
+	public Color waterColor;
+	public GameObject themeContent;
 
 	int start;
 	int end;
@@ -37,6 +39,12 @@ public class SmartPopulate : MonoBehaviour {
 		ScoresController.normalCount = 0;
 		ScoresController.silverCount = 0;
 		ScoresController.goldenCount = 0;
+		normalColor = ThemeHolder.theme.standardcolor;
+		silverColor = ThemeHolder.theme.mediumcolor;
+		goldenColor = ThemeHolder.theme.bestcolor;
+		waterColor = ThemeHolder.theme.watercolor;
+		water.GetComponent<Image>().color = waterColor;
+		GameObject.Find("StartPoint").GetComponent<Image>().color = waterColor;
 		generate();
 	}
 	
@@ -52,7 +60,7 @@ public class SmartPopulate : MonoBehaviour {
 		string goldenhex = ColorUtility.ToHtmlStringRGB(goldenColor);
 		scores.GetComponent<Text>().text = "<color=\"#" + normalhex + "\">" + ScoresController.normalCount + "</color>  " + 
 										   "<color=\"#" + silverhex + "\">" + ScoresController.silverCount + "</color>  " +
-										   "<color=\"#" + goldenhex + "\">" + ScoresController.goldenCount + "</color>";
+										   "<color=\"#" + goldenhex + "\">" + ScoresController.goldenCount + "</color>\n";
 		if(water.GetComponent<ScaleWayPoints>() != null)
 		if(water.GetComponent<ScaleWayPoints>().ended())
 		{

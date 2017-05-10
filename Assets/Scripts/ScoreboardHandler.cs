@@ -39,19 +39,27 @@ public class ScoreboardHandler : MonoBehaviour {
 			clearButton.gameObject.SetActive(true);
 		}
 		content = GameObject.Find("Content");
+		content.transform.localPosition = Vector2.zero;
 	}
 
 	void Update()
 	{
-		//check if it has scalewaypoints
-			//check if it's finished
-				//destroy it
-		//otherwise, add it from its current scale to 0 or current scale to 1
+		if(clearButton.GetComponent<ScaleWayPoints>() == null)
+		{
+			clearButton.AddComponent<ScaleWayPoints>();
+		}
 		if(content.transform.localPosition.y <= 0)
 		{
-			clearButton.SetActive(true);
-		} else
-			clearButton.SetActive(false);
+			clearButton.GetComponent<ScaleWayPoints>().points = new Vector3[] {
+				new Vector3(1f, 1f, 0.2f)
+			};
+		}
+		else
+		{
+			clearButton.GetComponent<ScaleWayPoints>().points = new Vector3[] {
+				new Vector3(0f, 0f, 0.2f)
+			};
+		}
 	}
 
 	public void confirmClear()

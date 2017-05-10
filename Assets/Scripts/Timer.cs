@@ -18,6 +18,18 @@ public class Timer : MonoBehaviour {
 		originalSeconds = seconds;
 		s = seconds + 1.0f;
 	}
+
+	float calcNewSeconds()
+	{
+		float timeTaken = originalSeconds - s - 1;
+		if(timeTaken < originalSeconds / 2)
+		{
+			return 1 + (originalSeconds + (originalSeconds + timeTaken) / 2) / 2;
+		} else
+		{
+			return (originalSeconds + (originalSeconds + timeTaken) / 2) / 2;
+		}
+	}
 	
 	void Update () {
 		if(s > 0 && !reset)
@@ -101,6 +113,8 @@ public class Timer : MonoBehaviour {
 		{
 			panel.GetComponent<SmartPopulate>().generate();
 			reset = false;
+			s = seconds + 1.0f;
+			originalSeconds = Mathf.CeilToInt(calcNewSeconds());
 			seconds = originalSeconds;
 			s = seconds + 1.0f;
 		}

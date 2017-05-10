@@ -3,7 +3,7 @@ using System.Collections;
 
 public class DifficultySelect : MonoBehaviour {
 
-	public static int MinDifficulty = 4;
+	public static int MinDifficulty = 5;
 	public static int MaxDifficulty = 10;
 	public static int Difficulty;
 	public UnityEngine.UI.Slider slider;

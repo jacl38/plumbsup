@@ -10,6 +10,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class SaveData : System.Object
 {
 	public SaveData() {}
+	private int coinCount = 0;
+	public List<int> themes = new List<int>();
+	public int themeIndex = 0;
+	public List<int> getThemes() { return themes; }
 	private List<Score> scores = new List<Score>();
 	public List<Score> getScores() { return scores; }
 	public void addScore(int difficulty, int score)
@@ -18,6 +22,19 @@ public class SaveData : System.Object
 		SortScores();
 		scores.Reverse();
 	}
+
+	public void addTheme(int index)
+	{
+		themes.Add(index);
+	}
+
+	public void addCoins(int amount)
+	{
+		coinCount += amount;
+	}
+
+	public int getCoins() { return this.coinCount; }
+	public void setCoins(int coins) { this.coinCount = coins; }
 
 	public void SortScores()
 	{
@@ -123,7 +140,7 @@ public class FileHandler : MonoBehaviour {
 		{
 			string path = Application.persistentDataPath;
 			path = path.Substring(0, path.LastIndexOf('/'));
-			return path + "Documents" + filename;
+			return path + "/" + filename;
 		}
 		else
 		{
